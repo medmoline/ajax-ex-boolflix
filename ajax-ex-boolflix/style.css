@@ -4,8 +4,28 @@
   box-sizing: border-box;
 }
 
+.container{
+  padding:10px 20px;
+}
+.container:after{
+  content:'';
+  display: table;
+  clear:both;
+}
 .card{
-  width:200px;
-  height:200px;
+  width:250px;
+  height:150px;
   border:1px solid black;
+  float:left;
+}
+
+.card li{
+  font-weight: bold;
+  color:red;
+  list-style-type: none;
+}
+
+.card span{
+  font-weight: normal;
+  color:black;
 }

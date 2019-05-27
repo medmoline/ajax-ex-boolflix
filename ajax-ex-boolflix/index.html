@@ -13,17 +13,18 @@
     <div class="container">
       <input type="text" class="search">
       <button class="bottone">Cerca</button>
-      <div class="container">
-        <ul class="card">
+      <div class="container_card">
 
-        </ul>
       </div>
     </div>
     <script id="entry-template" type="text/x-handlebars-template">
-        <li>{{titolo}}</li>
-        <li>{{titolo_originale}}</li>
-        <li>{{lingua}}</li>
-        <li>{{voto}}</li>
+      <ul class="card">
+        <li>Titolo: <span>{{titolo}}</span> </li>
+        <li>Titolo Originale: <span>{{titolo_originale}}</span> </li>
+        <li>Lingua: <span>{{lingua}}</span> </li>
+        <li>Voto: <span>{{voto}}</span> </li>
+      </ul>
+
 
     </script>
     <script src="main.js" charset="utf-8"></script>
