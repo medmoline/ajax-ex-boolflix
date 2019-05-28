@@ -6,6 +6,7 @@
 $(document).ready(function() {
   //salvo in una variabile l'url di base
   var url_base = 'https://api.themoviedb.org/3';
+  var url_film = '/search/movie';
   //creo template
   var source   = $("#entry-template").html();
   var template = Handlebars.compile(source);
@@ -17,13 +18,13 @@ $(document).ready(function() {
     //salvo il valore scritto dall'utente
     var valore_input = $('.search').val();
     //chiamo la funzione per far partire la chiamata api
-    chiamata_api_film(valore_input);
+    chiamata_api_film(valore_input,url_film);
   })
-  //funzione per chiamata_api dei film
-  function chiamata_api_film(testo){
+  //funzione per chiamata_api 
+  function chiamata_api_film(testo,sua_api){
     $.ajax({
       //url preso dal sito
-      'url': url_base + '/search/movie',
+      'url': url_base + sua_api,
       //data : api key personale del sito e query = valore input + lingua
       'data':{
         'api_key': 'bd8c17f057d750aa7d3b3a89931beb84',
@@ -46,7 +47,7 @@ $(document).ready(function() {
           'lingua':film.results[i].original_language,
           'voto':film.results[i].vote_average
         };
-        //creo l'html contenente il template 
+        //creo l'html contenente il template
         var html = template(context);
         //appendo tutto al contenitore delle carte
         $('.container_card').append(html);
