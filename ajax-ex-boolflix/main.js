@@ -63,8 +63,9 @@ $(document).ready(function() {
           'titolo_originale':film[i].original_title,
           'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
-          'stelle': stelle(film[i].vote_average)
-          // 'data-lang':film[i].original_language
+          'stelle': stelle(film[i].vote_average),
+          'copertina': film[i].poster_path
+
         };
         //creo l'html contenente il template
         var html = template(context);
@@ -104,8 +105,8 @@ $(document).ready(function() {
           'titolo_originale':film[i].original_name,
           'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
-          'stelle': stelle(film[i].vote_average)
-          // 'data-lang':film[i].original_language
+          'stelle': stelle(film[i].vote_average),
+          'copertina': controlla_immagine(film[i])
         };
         //creo l'html contenente il template
         var html = template(context);
@@ -154,4 +155,5 @@ $(document).ready(function() {
     return language
   }
 
+  
 })
