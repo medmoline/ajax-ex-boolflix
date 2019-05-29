@@ -16,6 +16,7 @@ $(document).ready(function() {
     //chiamo la funzione per far partire la chiamata api
     chiamata_api_film(valore_input,url_film);
     chiamata_api_serie(valore_input,url_serie);
+    $('.search').val('');
   });
 
   $('.search').keypress(function(event) {
@@ -25,6 +26,7 @@ $(document).ready(function() {
       console.log(valore_input);
       chiamata_api_film(valore_input);
       chiamata_api_serie(valore_input);
+      var valore_input = $('.search').val('')
     }
   });
 
@@ -62,7 +64,8 @@ $(document).ready(function() {
           'titolo_originale':film[i].original_title,
           'lingua':film[i].original_language,
           'voto': film[i].vote_average,
-          // 'stelle': stelle(film[i].vote_average)
+          'stelle': stelle(film[i].vote_average)
+          // 'data-lang':film[i].original_language
         };
         //creo l'html contenente il template
         var html = template(context);
@@ -89,32 +92,30 @@ $(document).ready(function() {
     })
   }
   //funzione per stampare le serie tv
-  function stampa_serie(serie){
-    var source_serie   = $("#template_serie").html();
-    var template_serie = Handlebars.compile(source_serie);
-    var serie = serie.results;
+  function stampa_serie(film){
+    //template per i film
+    var source   = $("#template_film").html();
+    var template = Handlebars.compile(source);
+    var film = film.results;
+
     //ciclo for lungo quanto tutto l'array
-    for(var i=0; i<serie.length; i++){
+    for(var i=0; i<film.length; i++){
       //context si rifa all'handlebars e gli metto dentro le proprietà da stampare
-      var context_serie = {
-          'titolo':serie[i].name,
-          'titolo_originale':serie[i].original_name,
-          'lingua':serie[i].original_language,
-          'voto': serie[i].vote_average,
-          // 'stelle': stelle(serie[i].vote_average)
+      var context = {
+          'titolo':film[i].name,
+          'titolo_originale':film[i].original_name,
+          'lingua':film[i].original_language,
+          'voto': film[i].vote_average,
+          'stelle': stelle(film[i].vote_average)
+          // 'data-lang':film[i].original_language
         };
         //creo l'html contenente il template
-        var html_serie = template_serie(context_serie);
+        var html = template(context);
         //appendo tutto al contenitore delle carte
-        $('.container_card').append(html_serie);
+        $('.container_card').append(html);
       }
 
   }
-
-
-
-
-
   function stelle (numero) {
     //prendo il numero
     var meta_numero = numero/2;
@@ -136,4 +137,6 @@ $(document).ready(function() {
 
     return stelle_piene + stelle_vuote
   }
+
+
 })
