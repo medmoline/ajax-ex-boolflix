@@ -16,7 +16,7 @@ $(document).ready(function() {
     //chiamo la funzione per far partire la chiamata api
     chiamata_api_film(valore_input,url_film);
     chiamata_api_serie(valore_input,url_serie);
-    $('.search').val('');
+    valore_input = $('.search').val('');
   });
 
   $('.search').keypress(function(event) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
       console.log(valore_input);
       chiamata_api_film(valore_input);
       chiamata_api_serie(valore_input);
-      var valore_input = $('.search').val('')
+       valore_input = $('.search').val('')
     }
   });
 
@@ -55,14 +55,13 @@ $(document).ready(function() {
     var source   = $("#template_film").html();
     var template = Handlebars.compile(source);
     var film = film.results;
-
     //ciclo for lungo quanto tutto l'array
     for(var i=0; i<film.length; i++){
       //context si rifa all'handlebars e gli metto dentro le proprietà da stampare
       var context = {
           'titolo':film[i].title,
           'titolo_originale':film[i].original_title,
-          'lingua':film[i].original_language,
+          'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
           'stelle': stelle(film[i].vote_average)
           // 'data-lang':film[i].original_language
@@ -72,7 +71,6 @@ $(document).ready(function() {
         //appendo tutto al contenitore delle carte
         $('.container_card').append(html);
       }
-
   }
 //funzione per chiamata_api serie
   function chiamata_api_serie(testo){
@@ -104,7 +102,7 @@ $(document).ready(function() {
       var context = {
           'titolo':film[i].name,
           'titolo_originale':film[i].original_name,
-          'lingua':film[i].original_language,
+          'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
           'stelle': stelle(film[i].vote_average)
           // 'data-lang':film[i].original_language
@@ -116,6 +114,7 @@ $(document).ready(function() {
       }
 
   }
+
   function stelle (numero) {
     //prendo il numero
     var meta_numero = numero/2;
@@ -138,5 +137,21 @@ $(document).ready(function() {
     return stelle_piene + stelle_vuote
   }
 
+
+  function flag_show(language) {
+    switch(language){
+      case 'it':
+      case 'fra':
+      case 'es':
+      language = '<img src="img/' + language + '.png ">' ;  ;
+        break;
+      case 'en':
+        language = '<img src="img/' + language + '.jpg ">' ;
+        break;
+      default :
+        language = '<img src="img/punto.jpg">';
+      }
+    return language
+  }
 
 })

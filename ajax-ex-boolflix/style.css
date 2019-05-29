@@ -30,3 +30,9 @@
   font-weight: normal;
   color:black;
 }
+
+span.img_lingua img{
+  width:25px;
+  height:20px;
+
+}
