@@ -64,7 +64,7 @@ $(document).ready(function() {
           'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
           'stelle': stelle(film[i].vote_average),
-          'copertina': film[i].poster_path
+          'copertina':copertina(film[i].poster_path)
 
         };
         //creo l'html contenente il template
@@ -106,7 +106,7 @@ $(document).ready(function() {
           'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
           'stelle': stelle(film[i].vote_average),
-          'copertina': film[i].poster_path
+          'copertina': copertina(film[i].poster_path)
         };
         //creo l'html contenente il template
         var html = template(context);
@@ -154,6 +154,16 @@ $(document).ready(function() {
       }
     return language
   }
+
+  function copertina(elemento){
+    if(elemento === null){
+      return '<img id="punto_interrogativo" src="img/punto.jpg">';
+
+    }else{
+      return '<img src="https://image.tmdb.org/t/p/w185/'+ elemento +'">'
+    }
+  }
+
 
 
 })
