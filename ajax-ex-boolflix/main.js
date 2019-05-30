@@ -2,40 +2,53 @@
 // Creare un layout base con una searchbar (una input e un button) in cui possiamo scrivere completamente o parzialmente il nome di un film. Possiamo, cliccando il bottone, cercare sull’API tutti i film che contengono ciò che ha scritto l’utente.
 // Vogliamo dopo la risposta dell’API visualizzare a schermo i seguenti valori per ogni film trovato:
 // 1. Titolo; 2. Titolo Originale; 3. Lingua; 4. Voto
-
 $(document).ready(function() {
-  //salvo in una variabile l'url di base
-  var url_base = 'https://api.themoviedb.org/3';
-
+  var url_base =  'https://api.themoviedb.org/3';
+  var url_film = '/search/movie';
+  var url_serie = '/search/tv';
 
   //intercetto il click sul bottone
-  $('.bottone').click(function() {
-    //resetto l'html ogni volta che faccio una ricerca
-    $('.container_card').html('');
-    var valore_input = $('.search').val();
-    //chiamo la funzione per far partire la chiamata api
-    chiamata_api_film(valore_input,url_film);
-    chiamata_api_serie(valore_input,url_serie);
-    valore_input = $('.search').val('');
-  });
-
-  $('.search').keypress(function(event) {
-    if(event.which == 13){
+    $('.btn').click(function() {
+      //resetto l'html ogni volta che faccio una ricerca
       $('.container_card').html('');
       var valore_input = $('.search').val();
-      console.log(valore_input);
-      chiamata_api_film(valore_input);
-      chiamata_api_serie(valore_input);
-       valore_input = $('.search').val('')
-    }
-  });
+      //chiamo la funzione per far partire la chiamata api
+      chiamata_api_film(valore_input,url_film);
+      chiamata_api_serie(valore_input,url_serie);
+      valore_input = $('.search').val('');
+    });
 
-//funzione per chiamata_api film
+    $('.search').keypress(function(event) {
+      if(event.which == 13){
+        $('.container_card').html('');
+        var valore_input = $('.search').val();
+        console.log(valore_input);
+        chiamata_api_film(valore_input);
+        chiamata_api_serie(valore_input);
+        valore_input = $('.search').val('')
+      }
+    });
+    //quando il mouse entra nella card
+    $(document).on('mouseenter', '.card', function(){
+    //faccio scomparire la copertina di questa stessa imamgine
+     $(this).find('.copertina_container').hide();
+     //e faccio apparire le informazioni
+     $(this).find('.informazioni').show();
+   })
+   //viceversa quando esco dalla card
+   $(document).on('mouseleave', '.card', function(){
+     //faccio apparire l'immagine
+     $(this).find('.copertina_container').show();
+     //faccio sparire le informazioni
+     $(this).find('.informazioni').hide();
+   });
+
+
+
   function chiamata_api_film(testo){
-
-    $.ajax({
+      $.ajax({
       //url preso dal sito
-      'url': url_base + '/search/movie',
+      'url': url_base + url_film,
       //data : api key personale del sito e query = valore input + lingua
       'data':{
         'api_key': 'bd8c17f057d750aa7d3b3a89931beb84',
@@ -43,41 +56,44 @@ $(document).ready(function() {
         'language':'it'
       },
       'success': function(data){
-        //chiamo la funzinone per stampare i film
-          stampa_film(data);
+        stampa_film(data);
+      },
+      'error': function() {
+        alert('errore');
       }
     })
   }
 
-//funzione per stampare film
-  function stampa_film(film){
+  function stampa_film(film) {
     //template per i film
-    var source   = $("#template_film").html();
-    var template = Handlebars.compile(source);
-    var film = film.results;
-    //ciclo for lungo quanto tutto l'array
-    for(var i=0; i<film.length; i++){
-      //context si rifa all'handlebars e gli metto dentro le proprietà da stampare
-      var context = {
-          'titolo':film[i].title,
-          'titolo_originale':film[i].original_title,
-          'lingua':flag_show(film[i].original_language),
-          'voto': film[i].vote_average,
-          'stelle': stelle(film[i].vote_average),
-          'copertina':copertina(film[i].poster_path)
+  var source   = $("#template_film").html();
+  var template = Handlebars.compile(source);
+  var film = film.results;
+  //ciclo for lungo quanto tutto l'array
+  for(var i=0; i<film.length; i++){
+    //context si rifa all'handlebars e gli metto dentro le proprietà da stampare
+    var context = {
+        'titolo':film[i].title,
+        'titolo_originale':film[i].original_title,
+        'lingua':flag_show(film[i].original_language),
+        'voto': film[i].vote_average,
+        'stelle': stelle(film[i].vote_average),
+        'copertina':copertina(film[i].poster_path),
+        'overview': film[i].overview
 
-        };
-        //creo l'html contenente il template
-        var html = template(context);
-        //appendo tutto al contenitore delle carte
-        $('.container_card').append(html);
-      }
+      };
+      //creo l'html contenente il template
+      var html = template(context);
+      //appendo tutto al contenitore delle carte
+      $('.container_film').append(html);
+    }
   }
-//funzione per chiamata_api serie
+
+  //funzione per chiamata_api serie
   function chiamata_api_serie(testo){
     $.ajax({
       //url preso dal sito
-      'url': url_base + '/search/tv',
+      'url': url_base + url_serie,
       //data : api key personale del sito e query = valore input + lingua
       'data':{
         'api_key': 'bd8c17f057d750aa7d3b3a89931beb84',
@@ -106,12 +122,13 @@ $(document).ready(function() {
           'lingua':flag_show(film[i].original_language),
           'voto': film[i].vote_average,
           'stelle': stelle(film[i].vote_average),
-          'copertina': copertina(film[i].poster_path)
+          'copertina': copertina(film[i].poster_path),
+          'overview': film[i].overview
         };
         //creo l'html contenente il template
         var html = template(context);
         //appendo tutto al contenitore delle carte
-        $('.container_card').append(html);
+        $('.container_film').append(html);
       }
 
   }
@@ -144,7 +161,7 @@ $(document).ready(function() {
       case 'it':
       case 'fra':
       case 'es':
-      language = '<img src="img/' + language + '.png ">' ;  ;
+      language = '<img src="img/' + language + '.png ">' ;
         break;
       case 'en':
         language = '<img src="img/' + language + '.jpg ">' ;
@@ -163,7 +180,6 @@ $(document).ready(function() {
       return '<img src="https://image.tmdb.org/t/p/w185/'+ elemento +'">'
     }
   }
-
 
 
 })

@@ -10,23 +10,68 @@
     <title></title>
   </head>
   <body>
-    <div class="container">
-      <input type="text" class="search">
-      <button class="bottone">Cerca</button>
-      <div class="container_card">
-        <!-- <i class="fas fa-star"></i> <!-stella piena-->
-        <!-- <i class="far fa-star"></i> <!-stella vuota-->
+    <header class="black">
+      <div class="header_container">
+        <div class="header_left">
+          <h1 class="logo">boolflix</h1>
+        </div>
+        <div class="header_right">
+          <input class="search" type="text" placeholder="Ricerca...">
+          <button class="btn">Cerca</button>
+        </div>
       </div>
-    </div>
+    </header>
+    <section class="brown">
+      <div class="container_film">
+
+      </div>
+    </section>
     <script id="template_film" type="text/x-handlebars-template">
-      <ul class="card">
-        <li>Titolo: <span>{{titolo}}</span> </li>
-        <li>Titolo Originale: <span>{{titolo_originale}}</span> </li>
-        <li>Lingua: <span class="img_lingua"> {{{lingua}}} </span> </li>
-        <li>Voto: <span>{{voto}}</span> </li>
-        <li>Rating : <span>{{{stelle}}}</span></li>
-        <li> {{{copertina}}}</li>
-      </ul>
+      <div class="card">
+        <div class="copertina">
+          <div class="copertina_container">
+            {{{copertina}}}
+          </div>
+          <ul class="informazioni ">
+            <li>
+              Titolo:
+              <span>
+                {{{titolo}}}
+              </span>ù
+            </li>
+            <li>
+              Titolo Originale:
+              <span>
+                {{{titolo_originale}}}
+              </span>
+            </li>
+            <li>
+              Lingua:
+              <span class="img_lingua">
+                {{{lingua}}}
+              </span>
+            </li>
+            <li>
+              Voto:
+              <span>
+                {{{voto}}}
+              </span>
+            </li>
+            <li>
+              Voto Utenti:
+              <span>
+                {{{stelle}}}
+              </span>
+            </li>
+            <li>
+              Trama:
+              <!-- <span>
+                {{{overview}}}
+              </span<> -->
+            </li>
+          </ul>
+        </div>
+      </div>
     </script>
     <script src="main.js" charset="utf-8"></script>
   </body>
