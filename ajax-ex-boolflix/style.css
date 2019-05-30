@@ -76,8 +76,8 @@
   width: 20%;
   margin-left: 3px;
   margin-top: 10px;
-  height: 300px;
   margin: 10px auto;
+  height:300px;
 }
 
 .card li{
@@ -89,7 +89,7 @@
 .card span,
 .overview{
   font-weight: normal;
-  color:black;
+  color:white;
 }
 
 span.img_lingua img{
@@ -98,9 +98,12 @@ span.img_lingua img{
 }
 
 .informazioni{
-  overflow-y: : scroll;
   display:none;
+  background-color:black;
   height: 300px;
+  overflow-y: auto;
+  width:90%;
+  padding:5px ;
 }
 
 .visible{
@@ -109,4 +112,5 @@ span.img_lingua img{
 
 .punto_interrogativo{
   width:180px;
+  height:250px;
 }
