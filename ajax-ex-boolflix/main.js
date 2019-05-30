@@ -80,7 +80,7 @@ $(document).ready(function() {
         'voto': film[i].vote_average,
         'stelle': stelle(film[i].vote_average),
         'copertina':copertina(film[i].poster_path),
-        'overview': film[i].overview
+        'overview': overview(film[i].overview)
 
       };
       //creo l'html contenente il template
@@ -125,7 +125,7 @@ $(document).ready(function() {
           'voto': film[i].vote_average,
           'stelle': stelle(film[i].vote_average),
           'copertina': copertina(film[i].poster_path),
-          'overview': film[i].overview
+          'overview': overview(film[i].overview)
         };
         //creo l'html contenente il template
         var html = template(context);
@@ -183,8 +183,14 @@ $(document).ready(function() {
     }
   }
 
+  function overview (elemento){
+    if (elemento == ''){
+      elemento = '- Trama non disponibile-';
+    }
+    return elemento
+  }
 
-  
+
 
 
 })
