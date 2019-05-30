@@ -10,7 +10,7 @@ $(document).ready(function() {
   //intercetto il click sul bottone
     $('.btn').click(function() {
       //resetto l'html ogni volta che faccio una ricerca
-      $('.container_card').html('');
+      $('.container_film').html('');
       var valore_input = $('.search').val();
       //chiamo la funzione per far partire la chiamata api
       chiamata_api_film(valore_input,url_film);
@@ -20,7 +20,7 @@ $(document).ready(function() {
 
     $('.search').keypress(function(event) {
       if(event.which == 13){
-        $('.container_card').html('');
+        $('.container_film').html('');
         var valore_input = $('.search').val();
         console.log(valore_input);
         chiamata_api_film(valore_input);
@@ -65,6 +65,7 @@ $(document).ready(function() {
   }
 
   function stampa_film(film) {
+
     //template per i film
   var source   = $("#template_film").html();
   var template = Handlebars.compile(source);
@@ -91,6 +92,7 @@ $(document).ready(function() {
 
   //funzione per chiamata_api serie
   function chiamata_api_serie(testo){
+
     $.ajax({
       //url preso dal sito
       'url': url_base + url_serie,
@@ -174,7 +176,7 @@ $(document).ready(function() {
 
   function copertina(elemento){
     if(elemento === null){
-      return '<img id="punto_interrogativo" src="img/punto.jpg">';
+      return '<img class="punto_interrogativo" src="img/punto.jpg">';
 
     }else{
       return '<img src="https://image.tmdb.org/t/p/w185/'+ elemento +'">'
